@@ -1,0 +1,6 @@
+SELECT
+id,
+  category,
+  price,
+  price - AVG(price) OVER (PARTITION BY category) AS deviation_from_avg
+FROM products;
