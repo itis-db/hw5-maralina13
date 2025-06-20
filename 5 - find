@@ -1,0 +1,14 @@
+SELECT
+task_id,
+  project_id,
+  start_date,
+  FIRST_VALUE(start_date) OVER (
+    PARTITION BY project_id
+    ORDER BY start_date
+  ) AS first_task_start,
+  LAST_VALUE(start_date) OVER (
+    PARTITION BY project_id
+    ORDER BY start_date
+    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+  ) AS last_task_start
+FROM project_tasks;
